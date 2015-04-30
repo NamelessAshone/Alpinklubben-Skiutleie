@@ -1,0 +1,89 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Handlekurv{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/order/handlekurv.css') }}">
+{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">Handlevognen</div>
+  <div class="panel-body">
+    <p>Når du er ferdig med å legg til dine varer/kjøp trykker du på bestill.</p>
+  </div>
+
+  <table class="table">
+    {% if not skis and not lift %}
+    <tr>
+        <td>Handlevognen din er tom, klikk <a href="{{ url_for('order.bestill') }}">her</a> for å lei deg ett par ski eller kjøp deg ett heiskort.</td>
+    </tr>
+    {% else %}
+    <tr>
+      <td width="200px"><b>Navn</b></td>
+      <td><b>Beskrivelse</b></td>
+      <td width="145px"><b>Pris</b></td>
+      <td width="50px">&nbsp;</td>
+    </tr>
+    {% set skicount = 0 %}
+    {% for s in skis %}
+    <tr>
+      <td class="vert-align">{{ s.navn }}</td>
+      <td class="vert-align">{{ s.beskrivelse }}</td>
+      <td class="vert-align">{{ s.pris }},-</td>
+      <td class="vert-align">
+        <a class="btn btn-danger" href="{{ url_for('order.fjern', type='ski', index=skicount) }}">
+          <i class="fa fa-trash"></i></a>
+      </td>
+    </tr>
+    {% set skicount = skicount + 1 %}
+    {% endfor %}
+    {% set liftcount = 0 %}
+    {% for l in lift %}
+    <tr>
+      <td class="vert-align">{{ l.navn }}</td>
+      <td class="vert-align">{{ l.beskrivelse }}</td>
+      <td class="vert-align">{{ l.pris }},-</td>
+      <td class="vert-align">
+        <a class="btn btn-danger" href="{{ url_for('order.fjern', type='liftpass', index=liftcount) }}">
+          <i class="fa fa-trash"></i></a>
+      </td>
+    </tr>
+    {% set liftcount = liftcount + 1 %}
+    {% endfor %}
+  </table>
+  <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+  <table class="table">
+      <tr>
+          <td class="text-right">
+              <h5>SUM</h5>
+          </td>
+          <td width="200px" class="text-right">
+              <h5><strong>{{ total_pris }},-</strong></h5>
+          </td>
+      </tr>
+      <tr>
+          <td class="text-right">
+              <h5>MVA (25%)</h5>
+          </td>
+          <td class="text-right">
+              <h5><strong>{{ total_pris * 0.25 }},-</strong></h5>
+          </td>
+      </tr>
+      <tr>
+          <td class="text-right">
+              <h3>Totalt</h3>
+          </td>
+          <td class="text-right">
+              <h3><strong>{{ total_pris * 1.25 }},-</strong></h3>
+          </td>
+      </tr>
+      <tr>
+          <td></td>
+          <td class="pull-right">
+              <a class="btn btn-primary" href="{{ url_for('order.bestill') }}">Til Utleie</a>
+              <a class="btn btn-success" href="{{ url_for('order.kvittering') }}">Bestill</a>
+          </td>
+      </tr>
+  {% endif %}
+  </table>
+</div>
+{% endblock %}

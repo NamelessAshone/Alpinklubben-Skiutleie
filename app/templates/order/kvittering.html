@@ -1,0 +1,100 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Bestill ski/heiskort{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/order/handlekurv.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+    		<div class="invoice-title">
+    			<h2>Kvittering</h2><h3 class="pull-right">Orderno # {{ order.id }}</h3>
+    		</div>
+    		<hr>
+    		<div class="row">
+    			<div class="col-xs-6">
+    				<address>
+    				<strong>Bestillt av:</strong><br>
+    					{{ current_user.fornavn }} {{ current_user.etternavn }}<br>
+    					Telefon: {{ current_user.telefon }}
+    				</address>
+    			</div>
+    			<div class="col-xs-6 text-right">
+    			</div>
+    		</div>
+    		<div class="row">
+    			<div class="col-xs-6">
+
+    			</div>
+    			<div class="col-xs-6 text-right">
+    				<address>
+    					<strong>Order dato:</strong><br>
+    					{{ order.dato.strftime('%Y-%m-%d %H:%M') }}<br><br>
+    				</address>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+    
+    <div class="row">
+    	<div class="col-md-12">
+    		<div class="panel panel-default">
+    			<div class="panel-heading">
+    				<h3 class="panel-title"><strong>Order oversikt</strong></h3>
+    			</div>
+    			<div class="panel-body">
+    				<div class="table-responsive">
+    					<table class="table table-condensed">
+    						<thead>
+                                <tr>
+        							<td width="140px"><strong>Varenavn</strong></td>
+        							<td><strong>Beskrivelse</strong></td>
+        							<td width="100px"><strong></strong></td>
+        							<td class="text-right" width="100px"><strong>Pris</strong></td>
+                                </tr>
+    						</thead>
+    						<tbody>
+                                {% for s in skis %}
+    							<tr>
+    								<td>{{ s.navn }}</td>
+    								<td>{{ s.beskrivelse }}</td>
+    								<td></td>
+    								<td class="text-right">{{ s.pris }},-</td>
+    							</tr>
+                                {% endfor %}
+                                {% for s in lift %}
+    							<tr>
+    								<td>{{ s.navn }}</td>
+    								<td>{{ s.beskrivelse }}</td>
+    								<td></td>
+    								<td class="text-right">{{ s.pris }},-</td>
+    							</tr>
+                                {% endfor %}
+    							<tr>
+    								<td class="thick-line"></td>
+    								<td class="thick-line"></td>
+    								<td class="thick-line text-center"><strong>SUM</strong></td>
+    								<td class="thick-line text-right">{{ total_pris }},-</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-center"><strong>MVA (25%)</strong></td>
+    								<td class="no-line text-right">{{ total_pris * 0.25 }},-</td>
+    							</tr>
+    							<tr>
+    								<td class="no-line"></td>
+    								<td class="no-line"></td>
+    								<td class="no-line text-center"><strong>Totalt</strong></td>
+    								<td class="no-line text-right">{{ total_pris * 1.25 }},-</td>
+    							</tr>
+    						</tbody>
+    					</table>
+    				</div>
+    			</div>
+    		</div>
+    	</div>
+    </div>
+</div>
+{% endblock %}

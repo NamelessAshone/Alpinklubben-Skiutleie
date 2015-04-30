@@ -1,0 +1,64 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Bestill ski/heiskort{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/font-awesome.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/order/handlekurv.css') }}">
+{% endblock %}
+{% block content %}
+<div class="panel panel-default">
+  <div class="panel-heading">Lei skiutstyr/kjøp heiskort</div>
+  <div class="panel-body">
+    <p>Hver ski pakke inneholder komplett sett med ski, boots, hjelm å staver.</p>
+  </div>
+  <table class="table">
+    <tr>
+      <td class="vert-align" width="180"><b>Navn</b></td>
+      <td class="vert-align"><b>Beskrivelse</b></td>
+      <td class="vert-align"><b>Periode</b></td>
+      <td width="100px">&nbsp;</td>
+    </tr>
+    {% for s in ski %}
+    {% set dagpris = s.pris * 7.5 %}
+    {% set ukepris = 6 * (s.pris * 7.5) %}
+    <tr>
+      <form action="{{ url_for('order.handlekurv', type='ski', id=s.id) }}" method="POST">
+      <td class="vert-align">{{ s.navn }}</td>
+      <td class="vert-align">{{ s.beskrivelse }}</td>
+      <td class="vert-align">
+          <div class="form-group">
+            <select class="form-control" name="periode">
+              <option value="{{ s.pris }}">En time ({{ s.pris }};-)</option>
+              <option value="{{ dagpris }}">En dag ({{ dagpris }};-)</option>
+              <option value="{{ ukepris }}">En uke ({{ ukepris }};-)</option>
+            </select>
+          </div>
+      </td>
+      <td class="vert-align">
+        <button type="submit" class="btn btn-success">
+          <span class="fa fa-cart-plus"></span> Legg til</a>
+        </button>
+      </td>
+      </form>
+    </tr>
+    {% endfor %}
+  </table>
+  <hr style="height:1px;border:none;color:#333;background-color:#333;" />
+  <table class="table">
+    {% for lift in liftpass %}
+    <tr>
+      <form action="{{ url_for('order.handlekurv', type='liftpass', id=lift.id) }}" method="POST">
+      <input type="hidden" name="periode" value="{{ lift.pris }}">
+      <td class="vert-align" width="180">{{ lift.navn }}</td>
+      <td class="vert-align">{{ lift.beskrivelse }}</td>
+      <td class="vert-align">{{ lift.pris }},-</td>
+      <td class="vert-align" width="100px">
+        <button type="submit" class="btn btn-success">
+          <span class="fa fa-cart-plus"></span> Legg til</a>
+        </button>
+      </td>
+      </form>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}
