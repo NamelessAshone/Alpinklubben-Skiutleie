@@ -1,0 +1,100 @@
+<!doctype html>
+<head>
+<meta charset="utf-8">
+<title>{% block title %}{% endblock %}</title>
+
+<meta name="description" content="Lei dine ski her!">
+<meta name="author" content="Joel Kaaberg">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-theme.min.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/layout.forms.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.responsive.css') }}">
+{% block head %}{% endblock %}
+
+<script src="{{ url_for('static', filename='js/libs/modernizr-2.6.2.min.js') }}"></script>
+<!--[if lt IE 9]><script src="{{ url_for('static', filename='js/libs/respond-1.3.0.min.js') }}"></script><![endif]-->
+</head>
+<body>
+  <div id="wrap">
+    <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="{{ url_for('pages.index') }}">Alpinklubben Skiutleie</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('pages.about') }}">Om oss</a></li>
+            {% if current_user.is_authenticated() %}
+            <li><a href="{{ url_for('order.bestill') }}">Utleie</a></li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Statistikk<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="{{ url_for('statistikk.render') }}">Hvilke er dem mest populere skiene?</a></li>
+                <li><a href="{{ url_for('statistikk.render', type=2) }}">Hvor mange salg per kort type?</a></li>
+              </ul>
+            </li>
+            {% endif %}
+          </ul>
+          <ul class="nav navbar-nav pull-right">
+            {% if session.get('ski') or session.get('liftpass') %}
+            <li><a href="{{ url_for('order.handlekurv') }}">Handlevogn&nbsp;<span class="badge pull-right"> {{ session['ski']|length + session['liftpass']|length }}</span></a></li>
+            {% endif %}
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{% if current_user.is_authenticated() %}Innlogget som {{ current_user.email }}{% else %}Bruker{% endif %}<span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                {% if not current_user.is_authenticated() %}
+                <li><a href="{{ url_for('users.register') }}">Registrer</a></li>
+                <li><a href="{{ url_for('users.login') }}">Logg inn</a></li>
+                {% else %}
+                <li><a href="{{ url_for('users.edit') }}">Instillinger</a></li>
+                  <li class="divider"></li>
+                  <li><a href="{{ url_for('users.logout') }}">Logg ut</a></li>
+                {% endif %}
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+<br />
+{% with messages = get_flashed_messages(with_categories=True) %}
+{% if messages %}
+  {% for category, message in messages %}
+    <div class="alert alert-block alert-{{ category }} fade in">
+      <a class="close" data-dismiss="alert">&times;</a>
+      {{ message.decode('utf-8') }}
+    </div>
+  {% endfor %}
+{% endif %}
+{% endwith %}
+{% block carousel %}{% endblock %}
+    <main id="content" role="main" class="container">
+      {% block content %}{% endblock %}
+    </main>
+    {% block below_content %}{% endblock %}
+    <nav class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <br />
+        <center><p>Alipinklubben Skiutleie &copy; Alle rettigheter reserverte.</p></center>
+        {% block footer %}{% endblock %}
+      </div>
+    </nav>
+  </div>
+
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js" defer></script>
+  <script>window.jQuery || document.write('<script type="text/javascript" src="/static/js/libs/jquery-1.10.2.min.js" defer><\/script>')</script>
+  <script src="{{ url_for('static', filename='js/libs/bootstrap.min.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/plugins.js') }}" defer></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}" defer></script>
+  {% block script %} {% endblock %}
+
+</body>
+</html>

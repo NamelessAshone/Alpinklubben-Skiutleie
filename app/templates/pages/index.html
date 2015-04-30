@@ -1,0 +1,82 @@
+{% extends 'layouts/main.html' %}
+{% block title %}Home{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home/index.css') }}">
+{% endblock %}
+{% block carousel %}
+<div id="myCarousel" class="carousel slide">
+    <ol class="carousel-indicators hidden-xs hidden-sm" style="padding-bottom: 42px;">
+        <li data-target="#carcousel-example-generic" data-slide-to="0" class="active"></li>
+        <li data-target="#carcousel-example-generic" data-slide-to="1"></li>
+        <li data-target="#carcousel-example-generic" data-slide-to="2"></li>
+        <li data-target="#carcousel-example-generic" data-slide-to="3"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="active item" align="center"><a href="#"><img src="{{ url_for('static', filename='img/1.jpg') }}" class="img-rounded" alt="PS3 reparatie Haarlem"></a>
+            <div class="carousel-caption">
+                <h3>Cupcake ipsum dolor sit amet</h3>
+                <p>Powder chocolate carrot cake. Applicake tart icing chupa chups marshmallow apple pie candy canes gingerbread croissant.</p>
+            </div>
+        </div>
+        <div class="item" align="center"><a href="#"><img src="{{ url_for('static', filename='img/2.jpg') }}" class="img-rounded" alt="Blu-ray Lens reparatie"></a>
+            <div class="carousel-caption">
+                <h3>Cupcake ipsum dolor sit amet</h3>
+                <p>Pudding fruitcake chocolate pastry caramels dessert powder cupcake. Marzipan sweet roll jelly macaroon brownie.</p>
+            </div>
+        </div>
+        <div class="item" align="center"><a href="#"><img src="{{ url_for('static', filename='img/3.jpg') }}" class="img-rounded" alt="Yellow Light of Death"></a>
+            <div class="carousel-caption">
+                <h3>Cupcake ipsum dolor sit amet</h3>
+                <p>Ice cream pie marzipan cookie macaroon dragée cookie. Caramels tootsie roll danish chocolate cake pastry icing.</p>
+            </div>
+        </div>
+        <div class="item" align="center"><a href="#"><img src="{{ url_for('static', filename='img/4.jpg') }}" class="img-rounded" alt="Yellow Light of Death"></a>
+            <div class="carousel-caption">
+                <h3>Cupcake ipsum dolor sit amet</h3>
+                <p>Ice cream pie marzipan cookie macaroon dragée cookie. Caramels tootsie roll danish chocolate cake pastry icing.</p>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#myCarousel" data-slide="prev">‹</a>
+    <a class="right carousel-control" href="#myCarousel" data-slide="next">›</a>
+</div>
+{% endblock %}
+{% block content %}
+<table class="table">
+    <tr>
+        <td class="vert-align"><img class="media-object pull-right img-circle" src="{{ url_for('static', filename='img/4.jpg') }}" width="256" height="256" alt="Media Object"></td>
+        <td class="vert-align">
+          <h2 class="media-heading">Lorem Ipsum</h2>
+          <p>Lorem Ipsum er rett og slett dummytekst fra og for trykkeindustrien. Lorem Ipsum har vært bransjens standard for dummytekst helt siden 1500-tallet, da en ukjent boktrykker stokket en mengde bokstaver for å lage et prøveeksemplar av en bok. Lorem Ipsum har tålt tidens tann usedvanlig godt, og har i tillegg til å bestå gjennom fem århundrer også tålt spranget over til elektronisk typografi uten vesentlige endringer. Lorem Ipsum ble gjort allment kjent i 1960-årene ved lanseringen av Letraset-ark med avsnitt fra Lorem Ipsum, og senere med sideombrekkingsprogrammet Aldus PageMaker som tok i bruk nettopp Lorem Ipsum for dummytekst.</p>
+        </td>
+    </tr>
+    <tr>
+        <td class="vert-align">
+          <h2 class="media-heading">Lorem Ipsum</h2>
+          <p>Lorem Ipsum er rett og slett dummytekst fra og for trykkeindustrien. Lorem Ipsum har vært bransjens standard for dummytekst helt siden 1500-tallet, da en ukjent boktrykker stokket en mengde bokstaver for å lage et prøveeksemplar av en bok. Lorem Ipsum har tålt tidens tann usedvanlig godt, og har i tillegg til å bestå gjennom fem århundrer også tålt spranget over til elektronisk typografi uten vesentlige endringer. Lorem Ipsum ble gjort allment kjent i 1960-årene ved lanseringen av Letraset-ark med avsnitt fra Lorem Ipsum, og senere med sideombrekkingsprogrammet Aldus PageMaker som tok i bruk nettopp Lorem Ipsum for dummytekst.</p>
+        </td>
+        <td class="vert-align"><img class="media-object pull-left img-circle" src="{{ url_for('static', filename='img/3.jpg') }}" width="256" height="256" alt="Media Object"></td>
+    </tr>
+    <tr>
+        <td class="vert-align"><img class="media-object pull-right img-circle" src="{{ url_for('static', filename='img/2.jpg') }}" width="256" height="256" alt="Media Object"></td>
+        <td class="vert-align">
+          <h2 class="media-heading">Lorem Ipsum</h2>
+          <p>Lorem Ipsum er rett og slett dummytekst fra og for trykkeindustrien. Lorem Ipsum har vært bransjens standard for dummytekst helt siden 1500-tallet, da en ukjent boktrykker stokket en mengde bokstaver for å lage et prøveeksemplar av en bok. Lorem Ipsum har tålt tidens tann usedvanlig godt, og har i tillegg til å bestå gjennom fem århundrer også tålt spranget over til elektronisk typografi uten vesentlige endringer. Lorem Ipsum ble gjort allment kjent i 1960-årene ved lanseringen av Letraset-ark med avsnitt fra Lorem Ipsum, og senere med sideombrekkingsprogrammet Aldus PageMaker som tok i bruk nettopp Lorem Ipsum for dummytekst.</p>
+        </td>
+    </tr>
+</table>
+<br />
+<br />
+{% endblock %}
+{% block script %}
+<script type="text/javascript">
+$(document).ready(function() {
+   $(".carousel-inner").swiperight(function() {
+       $(this).parent().carousel('prev');
+   });
+   $(".carousel-inner").swipeleft(function() {
+       $(this).parent().carousel('next');
+   });
+});
+</script>
+{% endblock %}

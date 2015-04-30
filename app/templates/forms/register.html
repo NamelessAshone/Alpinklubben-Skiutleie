@@ -1,0 +1,16 @@
+{% extends 'layouts/form.html' %}
+{% block title %}Register{% endblock %}
+{% block content %}
+  <form method="post" class="form" action="{{ url_for('users.register') }}">
+    <h3 class="form-heading">Registrer <a href="{{ url_for('pages.index') }}" title="Tilbake til hovedsiden."><i class="fa fa-home pull-right"></i></a></h3>
+    {{ form.hidden_tag() }}
+    {{ form.email(class_ = 'form-control first-input', placeholder = form.email.label.text, required = true) }}
+    {{ form.passord(class_ = 'form-control middle-input', placeholder = form.passord.label.text, required = true) }}
+    {{ form.passord_igjen(class_ = 'form-control middle-input', placeholder = form.passord_igjen.label.text, required = true) }}
+    {{ form.fornavn(class_ = 'form-control middle-input', placeholder = form.fornavn.label.text, required = true) }}
+    {{ form.etternavn(class_ = 'form-control middle-input', placeholder = form.etternavn.label.text, required = true) }}
+    {{ form.telefon(class_ = 'form-control middle-input', placeholder = form.telefon.label.text, required = true) }}
+    <center><p>Allerede registrert? <a href="{{ url_for('users.login') }}">Logg inn</a></p></center>
+    <input type="submit" value="Registrer" class="btn btn-primary btn-lg btn-block" >
+  </form>
+{% endblock %}
