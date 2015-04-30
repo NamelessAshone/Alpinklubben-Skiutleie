@@ -167,4 +167,4 @@ def sett_data():
         db.session.add(h)
 
     db.session.commit()
-    return True
+    return None

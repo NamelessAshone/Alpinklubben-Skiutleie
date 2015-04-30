@@ -18,12 +18,14 @@ def fiks_lister():
     if not session.get('liftpass'):
         session['liftpass'] = []
 
+
 @blueprint.route('/order/bestill')
 @login_required
 def bestill():
     return render_template('order/bestill.html',
                            ski=Ski.query.all(),
                            liftpass=Heiskort.query.all())
+
 
 @blueprint.route('/order/handlekurv/', methods=['GET', 'POST'])
 @login_required

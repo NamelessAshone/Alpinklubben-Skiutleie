@@ -34,13 +34,7 @@
             <li><a href="{{ url_for('pages.about') }}">Om oss</a></li>
             {% if current_user.is_authenticated() %}
             <li><a href="{{ url_for('order.bestill') }}">Utleie</a></li>
-            <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Statistikk<span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li><a href="{{ url_for('statistikk.render') }}">Hvilke er dem mest populere skiene?</a></li>
-                <li><a href="{{ url_for('statistikk.render', type=2) }}">Hvor mange salg per kort type?</a></li>
-              </ul>
-            </li>
+            <li><a href="{{ url_for('statistikk.graf') }}">Statistikk</a></li>
             {% endif %}
           </ul>
           <ul class="nav navbar-nav pull-right">

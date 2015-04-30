@@ -1,7 +1,9 @@
 {% extends 'layouts/main.html' %}
 {% block title %}Statistikk{% endblock %}
 {% block content %}
-<div class="container center-block">
-    {{ chart|safe }}
+<div class="well">
+    {% for graf in grafer %}
+    <embed class="center-block" type="image/svg+xml" width="640" height="400" src="{{ url_for('statistikk.render', type=graf) }}" />
+    {% endfor %}
 </div>
 {% endblock %}
