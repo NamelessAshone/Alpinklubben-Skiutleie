@@ -18,7 +18,7 @@ class RegisterForm(Form):
 class EditForm(Form):
     email = StringField('Email')
     passord = PasswordField('Passord', validators=[InputRequired(), Length(min=6, max=40)])
-    passord_igjen = PasswordField('Passord igjen', validators=[InputRequired(),
+    passord_igjen = PasswordField('Gjenta passord', validators=[InputRequired(),
                                                                EqualTo('passord', message='Passord felten må være lik.')])
     fornavn = StringField('Fornavn')
     etternavn = StringField('Etternavn')

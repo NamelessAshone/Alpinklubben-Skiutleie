@@ -10,8 +10,8 @@ USR_ACCUPDT = 'Din konto er oppdatert!'
 
 # ordre meld
 ORD_THANKS = 'Takk for din bestilling.'
-ORD_ADDED = 'Varen er nå lagt til i handlekurven.'
-ORD_REMOVED = 'Varen er nå fjernet fra handlekurven.'
+ORD_ADDED = 'Varen er nå lagt i handlevognen.'
+ORD_REMOVED = 'Varen er nå fjernet fra handlevognen.'
 
 # bruker status
 USR_ACTIVE = 'aktiv'

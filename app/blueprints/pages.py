@@ -35,32 +35,8 @@ def index():
 
     return render_template('pages/index.html', current_user=current_user, form=form)
 
-@blueprint.route('/user/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm(request.form)
-
-    if form.validate_on_submit():
-        bruker = Bruker.query.filter_by(email=form.email.data, passord=form.passord.data).first()
-
-        if bruker is None:
-            flash(USR_WRONG_USRPWD, FLASH_ERROR)
-            return redirect(url_for('users.login'))
-
-        if bruker.status == USR_NOTACTIVE:
-            flash(USR_DEACTIVEATED, FLASH_INFO)
-            return redirect(url_for('users.login'))
-
-        login_user(bruker)
-        flash(USR_LOGGEDIN, FLASH_SUCCESS)
-        return redirect(request.args.get("next") or url_for('pages.index'))
-    else:
-        if form.errors:
-            flash_errors(form)
-
-        return render_template('forms/login.html', form=form)
-
 
 @blueprint.route('/about')
 def about():
-    return render_template('pages/about.html')
+    return render_template('pages/about.html', form=LoginForm(request.form))
 

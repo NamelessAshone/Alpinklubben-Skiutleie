@@ -75,19 +75,27 @@
     								<td class="thick-line"></td>
     								<td class="thick-line"></td>
     								<td class="thick-line text-center"><strong>SUM</strong></td>
-    								<td class="thick-line text-right">{{ total_pris }},-</td>
+    								<td class="thick-line text-right">{{ sum }},-</td>
     							</tr>
+                                {% if rabatt %}
+                                <tr>
+    								<td class="thick-line"></td>
+    								<td class="thick-line"></td>
+    								<td class="thick-line text-center"><strong>Rabatt</strong></td>
+    								<td class="thick-line text-right">{{ rabatt }},-</td>
+    							</tr>
+                                {%  endif %}
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line text-center"><strong>MVA (25%)</strong></td>
-    								<td class="no-line text-right">{{ total_pris * 0.25 }},-</td>
+    								<td class="no-line text-right">{{ mva }},-</td>
     							</tr>
     							<tr>
     								<td class="no-line"></td>
     								<td class="no-line"></td>
     								<td class="no-line text-center"><strong>Totalt</strong></td>
-    								<td class="no-line text-right">{{ total_pris * 1.25 }},-</td>
+    								<td class="no-line text-right">{{ total }},-</td>
     							</tr>
     						</tbody>
     					</table>

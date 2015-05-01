@@ -41,12 +41,18 @@ def basket():
 
         flash(ORD_ADDED, FLASH_INFO)
 
-    total_pris, skis, lift = settOppOrdre()
+    sum, skis, lift = settOppOrdre()
+    pris = Pris(sum)
+
+    print pris
 
     return render_template('order/basket.html',
                            skis=skis,
                            lift=lift,
-                           total_pris=total_pris)
+                           sum=pris.sum,
+                           mva=pris.mva,
+                           total=pris.total,
+                           rabatt=pris.rabatt)
 
 
 @blueprint.route('/order/remove/<type>/<index>')
@@ -60,9 +66,10 @@ def remove(type, index):
 @blueprint.route('/order/receipt')
 @login_required
 def receipt():
-    total_pris, skis, lift = settOppOrdre()
+    sum, skis, lift = settOppOrdre()
+    pris = Pris(sum)
 
-    order = Ordre(current_user.get_id(), total_pris)
+    order = Ordre(current_user.get_id(), pris.total)
 
     db.session.add(order)       # her må vi først legge til
     db.session.flush()          # for å siden initiere den i databasen
@@ -85,34 +92,46 @@ def receipt():
     flash(ORD_THANKS, FLASH_SUCCESS)
 
     return render_template('order/receipt.html',
-                           total_pris=total_pris,
                            skis=skis,
                            lift=lift,
-                           order=order)
+                           order=order,
+                           sum=pris.sum,
+                           mva=pris.mva,
+                           total=pris.total,
+                           rabatt=pris.rabatt)
 
 
 def settOppOrdre():
     skis = []
     lift = []
-    total_pris = 0
+    sum = 0
 
     for s in session.get('ski'):
         ski = Ski.query.filter_by(id=s[0]).first()
 
-        total_pris += s[1]
+        sum += s[1]
         skis.append(Handleliste(ski.id, ski.navn, ski.beskrivelse, s[1]))
 
     for s in session.get('liftpass'):
         liftpass = Heiskort.query.filter_by(id=s[0]).first()
 
-        total_pris += liftpass.pris
+        sum += liftpass.pris
         lift.append(liftpass)
 
-    return total_pris, skis, lift
+    return sum, skis, lift
 
 
-@blueprint.after_request
-def per_request_callbacks(response):
-    for func in getattr(g, 'call_after_request', ()):
-        response = func(response)
-    return response
+class Pris(object):
+    sum = 0
+    rabatt = 0
+    mva = 0
+    total = 0
+
+    def __init__(self, sum):
+        self.sum = sum
+        self.rabatt = round(self.sum * 0.15 if len(session['ski']) >= 4 else 0, 2)
+        self.mva = round(self.sum * 0.25, 2)
+        self.total = round(self.sum + self.mva, 2)
+
+    def __repr__(self):
+        return '<Sum %s - Rabatt %s - MVA %s - Total %s>' % (self.sum, self.rabatt, self.mva, self.total)

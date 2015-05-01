@@ -8,7 +8,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">Handlevognen</div>
   <div class="panel-body">
-    <p>Når du er ferdig med å legg til dine varer/kjøp trykker du på bestill.</p>
+    <p>Når du er ferdig med å legge til dine varer/kjøp trykker du på bestill.</p>
   </div>
 
   <table class="table">
@@ -57,15 +57,25 @@
               <h5>SUM</h5>
           </td>
           <td width="200px" class="text-right">
-              <h5><strong>{{ total_pris }},-</strong></h5>
+              <h5><strong>{{ sum }},-</strong></h5>
           </td>
       </tr>
+      {% if rabatt %}
+      <tr>
+          <td class="text-right">
+              <h5>Rabatt</h5>
+          </td>
+          <td class="text-right">
+              <h5><strong>{{ rabatt }},-</strong></h5>
+          </td>
+      </tr>
+      {% endif %}
       <tr>
           <td class="text-right">
               <h5>MVA (25%)</h5>
           </td>
           <td class="text-right">
-              <h5><strong>{{ total_pris * 0.25 }},-</strong></h5>
+              <h5><strong>{{ mva }},-</strong></h5>
           </td>
       </tr>
       <tr>
@@ -73,7 +83,7 @@
               <h3>Totalt</h3>
           </td>
           <td class="text-right">
-              <h3><strong>{{ total_pris * 1.25 }},-</strong></h3>
+              <h3><strong>{{ total }},-</strong></h3>
           </td>
       </tr>
       <tr>
