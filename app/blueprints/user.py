@@ -21,11 +21,11 @@ def login():
 
         if bruker is None:
             flash(USR_WRONG_USRPWD, FLASH_ERROR)
-            return redirect(url_for('users.login'))
+            return redirect(url_for('pages.index'))
 
         if bruker.status == USR_NOTACTIVE:
             flash(USR_DEACTIVEATED, FLASH_INFO)
-            return redirect(url_for('users.login'))
+            return redirect(url_for('pages.index'))
 
         login_user(bruker)
         flash(USR_LOGGEDIN, FLASH_SUCCESS)
