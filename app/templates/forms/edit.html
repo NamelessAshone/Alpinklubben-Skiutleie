@@ -1,18 +1,55 @@
 {% extends 'layouts/form.html' %}
 {% block title %}Instillinger{% endblock %}
 {% block content %}
-  <form method="post" class="form" action="{{ url_for('users.edit') }}">
-    <h3 class="form-heading">Instillinger <a href="{{ url_for('pages.index') }}" title="Tilbake til hovedsiden."><i class="fa fa-home pull-right"></i></a></h3>
-    {{ form.hidden_tag() }}
-    {{ form.email(class_ = 'form-control first-input', required = true, disabled = True) }}
-    {{ form.passord(class_ = 'form-control middle-input', required = true) }}
-    {{ form.passord_igjen(class_ = 'form-control middle-input', required = true) }}
-    {{ form.fornavn(class_ = 'form-control middle-input', required = true, disabled = True) }}
-    {{ form.etternavn(class_ = 'form-control middle-input', required = true, disabled = True) }}
-    {{ form.telefon(class_ = 'form-control middle-input', required = true) }}
-    <input type="submit" value="Oppdater" class="btn btn-primary btn-lg btn-block" >
-  </form>
-  <form method="post" class="form" action="{{ url_for('users.delete') }}">
-      <input type="submit" value="Fjern meg" class="btn btn-danger btn-lg btn-block" action="{{ url_for('users.delete') }}" >
-  </form>
+<div class="container">
+    <h1>Instillinger <a href="{{ url_for('pages.index') }}" title="Tilbake til hovedsiden."><i class="fa fa-home pull-right"></i></a></h1>
+  	<hr>
+    <form class="form-horizontal" role="form" method="post" class="form" action="{{ url_for('user.edit') }}">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        <label class="col-lg-3 control-label">Fornavn:</label>
+        <div class="col-lg-8">
+          {{ form.fornavn(class_ = 'form-control', disabled = True) }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label">Etternavn:</label>
+        <div class="col-lg-8">
+          {{ form.etternavn(class_ = 'form-control', disabled = True) }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label">Email:</label>
+        <div class="col-lg-8">
+          {{ form.email(class_ = 'form-control', disabled = True) }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-lg-3 control-label">Telefon:</label>
+        <div class="col-lg-8">
+          {{ form.telefon(class_ = 'form-control', required = True) }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3 control-label">Passord:</label>
+        <div class="col-md-8">
+          {{ form.passord(class_ = 'form-control', required = True) }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3 control-label">Gjenta passord:</label>
+        <div class="col-md-8">
+          {{ form.passord_igjen(class_ = 'form-control', required = True) }}
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-md-3 control-label"></label>
+        <div class="col-md-8">
+          <input type="submit" class="btn btn-primary" value="Oppdater">
+          <a class="btn btn-danger" href="{{ url_for('user.deactivate') }}">
+              Deaktiver denne kontoen</a>
+        </div>
+      </div>
+    </form>
+</div>
 {% endblock %}

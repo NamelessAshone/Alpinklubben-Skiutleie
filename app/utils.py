@@ -8,4 +8,4 @@ from app.messages import *
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
-            flash(u"Error in the %s field - %s" % (getattr(form, field).label.text, error), FLASH_ERROR)
+            flash(error, FLASH_ERROR)

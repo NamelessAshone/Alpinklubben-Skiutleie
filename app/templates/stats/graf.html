@@ -3,7 +3,7 @@
 {% block content %}
 <div class="well">
     {% for graf in grafer %}
-    <embed class="center-block" type="image/svg+xml" width="640" height="400" src="{{ url_for('statistikk.render', type=graf) }}" />
+    <embed class="center-block" type="image/svg+xml" width="640" height="400" src="{{ url_for('stats.render', type=graf) }}" />
     {% endfor %}
 </div>
 {% endblock %}

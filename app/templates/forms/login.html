@@ -1,13 +1,13 @@
 {% extends 'layouts/form.html' %}
 {% block title %}Login{% endblock %}
 {% block content %}
-  <form method="post" class="form" action="{{ url_for('users.login') }}">
+  <form method="post" class="form" action="{{ url_for('user.login') }}">
     <h3 class="form-heading">Logg inn <a href="{{ url_for('pages.index') }}" title="Tilbake til hovedsiden."><i class="fa fa-home pull-right"></i></a></h3>
     {{ form.hidden_tag() }}
     {{ form.email(class_ = 'form-control first-input', placeholder = form.email.label.text, required = true, autofocus = true) }}
     {{ form.passord(class_ = 'form-control last-input', placeholder = form.passord.label.text, required = true) }}
     <p class="pull-left"></p>
-    <p class="pull-right"><a href="{{ url_for('users.register') }}">Registrere</a></p>
+    <p class="pull-right"><a href="{{ url_for('user.register') }}">Registrer</a></p>
     <input type="submit" value="Logg inn" class="btn btn-primary btn-lg btn-block">
   </form>
 {% endblock %}

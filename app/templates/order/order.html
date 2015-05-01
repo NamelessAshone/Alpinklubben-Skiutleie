@@ -21,7 +21,7 @@
     {% set dagpris = s.pris * 7.5 %}
     {% set ukepris = 6 * (s.pris * 7.5) %}
     <tr>
-      <form action="{{ url_for('order.handlekurv', type='ski', id=s.id) }}" method="POST">
+      <form action="{{ url_for('order.basket', type='ski', id=s.id) }}" method="POST">
       <td class="vert-align">{{ s.navn }}</td>
       <td class="vert-align">{{ s.beskrivelse }}</td>
       <td class="vert-align">
@@ -46,7 +46,7 @@
   <table class="table">
     {% for lift in liftpass %}
     <tr>
-      <form action="{{ url_for('order.handlekurv', type='liftpass', id=lift.id) }}" method="POST">
+      <form action="{{ url_for('order.basket', type='liftpass', id=lift.id) }}" method="POST">
       <input type="hidden" name="periode" value="{{ lift.pris }}">
       <td class="vert-align" width="180">{{ lift.navn }}</td>
       <td class="vert-align">{{ lift.beskrivelse }}</td>

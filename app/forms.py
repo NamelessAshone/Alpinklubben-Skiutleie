@@ -28,7 +28,3 @@ class EditForm(Form):
 class LoginForm(Form):
     email = StringField('Email', validators=[Email()])
     passord = PasswordField('Passord', validators=[InputRequired()])
-
-
-class ForgotForm(Form):
-    email = StringField('Email', validators=[InputRequired(), Email, Length(min=6, max=40)])

@@ -2,25 +2,24 @@
 
 import pygal
 from pygal.style import LightStyle
-from datetime import datetime
 
 from flask import render_template, Blueprint
 from flask.ext.login import login_required
 
 from app.extensions import db
 
-blueprint = Blueprint('statistikk', __name__)
+blueprint = Blueprint('stats', __name__)
 
 
-@blueprint.route('/statistikk/graf/')
+@blueprint.route('/stats/graphs/')
 @login_required
 def graf():
     grafer = ('ski', 'cards', 'inntekt')
 
-    return render_template('statistikk/graf.html', grafer=grafer)
+    return render_template('stats/graf.html', grafer=grafer)
 
 
-@blueprint.route('/statistikk/svg/<type>.svg')
+@blueprint.route('/stats/svg/<type>.svg')
 @login_required
 def render(type):
     LightStyle.background = 'transparent'

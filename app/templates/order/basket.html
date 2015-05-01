@@ -14,7 +14,7 @@
   <table class="table">
     {% if not skis and not lift %}
     <tr>
-        <td>Handlevognen din er tom, klikk <a href="{{ url_for('order.bestill') }}">her</a> for å lei deg ett par ski eller kjøp deg ett heiskort.</td>
+        <td>Handlevognen din er tom, klikk <a href="{{ url_for('order.order') }}">her</a> for å lei deg ett par ski eller kjøp deg ett heiskort.</td>
     </tr>
     {% else %}
     <tr>
@@ -30,7 +30,7 @@
       <td class="vert-align">{{ s.beskrivelse }}</td>
       <td class="vert-align">{{ s.pris }},-</td>
       <td class="vert-align">
-        <a class="btn btn-danger" href="{{ url_for('order.fjern', type='ski', index=skicount) }}">
+        <a class="btn btn-danger" href="{{ url_for('order.remove', type='ski', index=skicount) }}">
           <i class="fa fa-trash"></i></a>
       </td>
     </tr>
@@ -43,7 +43,7 @@
       <td class="vert-align">{{ l.beskrivelse }}</td>
       <td class="vert-align">{{ l.pris }},-</td>
       <td class="vert-align">
-        <a class="btn btn-danger" href="{{ url_for('order.fjern', type='liftpass', index=liftcount) }}">
+        <a class="btn btn-danger" href="{{ url_for('order.remove', type='liftpass', index=liftcount) }}">
           <i class="fa fa-trash"></i></a>
       </td>
     </tr>
@@ -79,8 +79,8 @@
       <tr>
           <td></td>
           <td class="pull-right">
-              <a class="btn btn-primary" href="{{ url_for('order.bestill') }}">Til Utleie</a>
-              <a class="btn btn-success" href="{{ url_for('order.kvittering') }}">Bestill</a>
+              <a class="btn btn-primary" href="{{ url_for('order.order') }}">Til Utleie</a>
+              <a class="btn btn-success" href="{{ url_for('order.receipt') }}">Bestill</a>
           </td>
       </tr>
   {% endif %}

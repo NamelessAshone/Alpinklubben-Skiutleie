@@ -1,0 +1,7 @@
+pygal
+Flask-Login
+Flask
+Flask-SQLAlchemy
+Jinja2
+SQLAlchemy
+Flask-WTF

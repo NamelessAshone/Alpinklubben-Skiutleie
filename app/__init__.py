@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 import logging
-from os import path
 from flask import Flask
 
 from app.models import *
-from app.blueprints import pages, order, users, statistikk
-from app.extensions import login_manager, db
 
+from app.extensions import db, login_manager
 extensions = (db, login_manager)
-blueprints = (order, pages, users, statistikk)
+
+from app.blueprints import order, pages, user, stats
+blueprints = (order, pages, user, stats)
 
 
 # lag selve flask instansen
@@ -21,13 +21,6 @@ def create_app(config_filename):
     # last inn moduler å blueprints
     configure_ext(app, extensions)
     configure_blueprints(app, blueprints)
-
-    # en "hacky" måte å sett opp database med tilhørende "dummy data"
-    with app.app_context():
-        if not path.isfile(path.join(app.config['BASE_DIR'], 'database.db')):
-            from app.models import sett_data
-            db.create_all()
-            sett_data()
 
     return app
 

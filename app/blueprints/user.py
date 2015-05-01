@@ -3,13 +3,13 @@
 from flask import render_template, Blueprint, request, flash, redirect, url_for, session
 from flask.ext.login import login_user, logout_user, login_required, current_user
 
-from app.forms import LoginForm, RegisterForm, EditForm, ForgotForm
+from app.forms import LoginForm, RegisterForm, EditForm
 from app.extensions import db
 from app.models import Bruker
 from app.messages import *
 from app.utils import flash_errors
 
-blueprint = Blueprint('users', __name__)
+blueprint = Blueprint('user', __name__)
 
 
 @blueprint.route('/user/login', methods=['GET', 'POST'])
@@ -67,7 +67,7 @@ def register():
         db.session.commit()
 
         flash(USR_REGISTRED, FLASH_SUCCESS)
-        return redirect(url_for('users.login'))
+        return redirect(url_for('pages.index'))
     else:
         if form.errors:
             flash_errors(form)
@@ -104,16 +104,13 @@ def edit():
         return render_template('forms/edit.html', form=form, current_user=current_user)
 
 
-@blueprint.route('/user/delete', methods=['GET', 'POST'])
+@blueprint.route('/user/deactivate')
 @login_required
-def delete():
-    if request.method == 'POST':
-        bruker = Bruker.query.filter_by(id=current_user.get_id()).first()
-        bruker.status = USR_NOTACTIVE
+def deactivate():
+    bruker = Bruker.query.filter_by(id=current_user.get_id()).first()
+    bruker.status = USR_NOTACTIVE
 
-        db.session.commit()
-        logout_user()
-        flash(USR_DEACTIVEATED, FLASH_INFO)
-        return redirect(url_for('pages.index'))
-
-    return redirect(url_for('users.edit'))
+    db.session.commit()
+    logout_user()
+    flash(USR_DEACTIVEATED, FLASH_INFO)
+    return redirect(url_for('pages.index'))

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import render_template, Blueprint, redirect, url_for, session, request, flash
+from flask import render_template, Blueprint, redirect, url_for, session, request, flash, g
 from flask.ext.login import login_required, current_user
 
 from app.models import Ski, Heiskort, Ordre, Ordre_Heiskort, Ordre_Ski, Handleliste, db
@@ -10,26 +10,25 @@ blueprint = Blueprint('order', __name__)
 
 
 @blueprint.before_request
-def fiks_lister():
-    # ondt men nødvendig
-
+def sjekkLister():
+    # sørg for at våres handlelister er satt opp
     if not session.get('ski'):
         session['ski'] = []
     if not session.get('liftpass'):
         session['liftpass'] = []
 
 
-@blueprint.route('/order/bestill')
+@blueprint.route('/order/order')
 @login_required
-def bestill():
-    return render_template('order/bestill.html',
+def order():
+    return render_template('order/order.html',
                            ski=Ski.query.all(),
                            liftpass=Heiskort.query.all())
 
 
-@blueprint.route('/order/handlekurv/', methods=['GET', 'POST'])
+@blueprint.route('/order/basket/', methods=['GET', 'POST'])
 @login_required
-def handlekurv():
+def basket():
     if request.method == 'POST':
         pris = float(request.form["periode"])
         id = int(request.args.get("id"))
@@ -44,23 +43,23 @@ def handlekurv():
 
     total_pris, skis, lift = settOppOrdre()
 
-    return render_template('order/handlekurv.html',
+    return render_template('order/basket.html',
                            skis=skis,
                            lift=lift,
                            total_pris=total_pris)
 
 
-@blueprint.route('/order/fjern/<type>/<index>')
+@blueprint.route('/order/remove/<type>/<index>')
 @login_required
-def fjern(type, index):
+def remove(type, index):
     del session[type][int(index)]
     flash(ORD_REMOVED, FLASH_INFO)
-    return redirect(url_for('order.handlekurv'))
+    return redirect(url_for('order.basket'))
 
 
-@blueprint.route('/order/kvittering')
+@blueprint.route('/order/receipt')
 @login_required
-def kvittering():
+def receipt():
     total_pris, skis, lift = settOppOrdre()
 
     order = Ordre(current_user.get_id(), total_pris)
@@ -85,7 +84,7 @@ def kvittering():
 
     flash(ORD_THANKS, FLASH_SUCCESS)
 
-    return render_template('order/kvittering.html',
+    return render_template('order/receipt.html',
                            total_pris=total_pris,
                            skis=skis,
                            lift=lift,
@@ -110,3 +109,10 @@ def settOppOrdre():
         lift.append(liftpass)
 
     return total_pris, skis, lift
+
+
+@blueprint.after_request
+def per_request_callbacks(response):
+    for func in getattr(g, 'call_after_request', ()):
+        response = func(response)
+    return response

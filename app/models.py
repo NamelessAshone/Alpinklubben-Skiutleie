@@ -147,24 +147,5 @@ class Handleliste():
         self.pris = pris
         self.periode = periode
 
-
-# en funksjon for å sett inn data når d ikke eksisterer en DB fra førr
-def sett_data():
-    ski = [Ski('Dynastar 300', 'Perfekt for den som liker litt fart.', 170, 12, 15, 50),
-           Ski('GoPro 1337', 'For den litt mer vant aakeren, godt engnet for dem som liker snowparken.', 200, 18, 25, 80),
-           Ski('NoGoPro', 'Ikke aakt ski tidliger? Da er dette pakken for deg.', 120, 14, 18, 65),
-           Ski('MuchGo SuchShow 15', 'Aakt ski siden barnsbein sa du? Da er dette pakken for deg.', 160, 15, 20, 70),
-           Ski('2fast 2furious', 'Styrtlopp? Kjappere enn lyset? Jajamensan, dette er den perfekte pakken for deg.', 110, 4, 7, 45)]
-
-    heiskort = [Heiskort('Dagskort', 'Gjelder fra aapning- til stengningstid.', 170),
-                Heiskort('Ukeskort', 'Gjelder fra Mandag til Fredag.,', 1275),
-                Heiskort('Sesongkort', 'Gjelder fra Desember til April.', 6550)]
-
-    for s in ski:
-        db.session.add(s)
-
-    for h in heiskort:
-        db.session.add(h)
-
-    db.session.commit()
-    return None
+    def __repr__(self):
+        return '<Handleliste %r>' % self.id
